@@ -1,0 +1,24 @@
+﻿@model Group
+@{
+    ViewData["Title"] = "Edit group";
+}
+
+<div class="container">
+    <h2>Group editing</h2>
+    <form asp-action="UpdateGroup" method="post">
+        @Html.HiddenFor(model => model.GROUP_ID)
+        <input type="hidden" asp-for="COURSE_ID" value="@Model.COURSE_ID" />
+
+        <div class="form-group">
+            <label asp-for="NAME" class="control-label"></label>
+            <input asp-for="NAME" class="form-control" value="@Model.NAME"/>
+            <span asp-validation-for="NAME" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a class="btn btn-secondary" asp-action="Groups" asp-route-courseId="@Model.COURSE_ID">Cancel</a>
+            <input type="hidden" asp-for="COURSE_ID" value="@Model.COURSE_ID" />
+        </div>
+    </form>
+</div>

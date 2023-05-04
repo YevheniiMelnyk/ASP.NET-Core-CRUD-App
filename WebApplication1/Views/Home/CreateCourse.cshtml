@@ -1,0 +1,32 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Create course";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="container">
+    <h2>Course Creating</h2>
+    <form asp-action="CreateCourse" method="post">
+
+        <div class="form-group">
+            <label asp-for="NAME"></label>
+            <input class="form-control" asp-for="NAME" />
+            <span asp-validation-for="NAME" class="text-danger" data-val="true"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DESCRIPTION"></label>
+            <textarea class="form-control" asp-for="DESCRIPTION"></textarea>
+            <span asp-validation-for="DESCRIPTION" class="text-danger" data-val="true"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

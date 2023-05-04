@@ -1,0 +1,28 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Update course";
+}
+
+<div class="container">
+    <h2>Course editing</h2>
+    <form asp-action="UpdateCourse" asp-route-id="@Model.COURSE_ID" method="post">
+        <input type="hidden" asp-for="COURSE_ID" />
+
+        <div class="form-group">
+            <label asp-for="NAME"></label>
+            <input class="form-control" asp-for="NAME" value="@Model.NAME"/>
+            <span asp-validation-for="NAME" class="text-danger" data-val="true"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DESCRIPTION"></label>
+            <input class="form-control" asp-for="DESCRIPTION" value="@Model.DESCRIPTION"/>
+            <span asp-validation-for="DESCRIPTION" class="text-danger" data-val="true"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WebApplication1.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+@{
+    int groupId = ViewBag.GroupId ?? 0;
+}
+
+<div class="container">
+    <div class="text-center">
+        <a class="btn btn-primary" asp-controller="Student" asp-action="CreateStudent" asp-route-groupId="@groupId">Create student</a>
+    </div>
+
+    <input type="hidden" value="@groupId" name="groupId" />
+
+    @if (!Model.Any())
+    {
+        <h4>The group does not contain any of students</h4>
+    }
+    else
+    {
+        <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var student in Model)
+                        {
+                        <tr>
+                            <td>@student.FIRST_NAME</td>
+                            <td>@student.LAST_NAME</td>
+                            <td class="td-btn">
+                                <a class="btn btn-primary" asp-action="UpdateStudent" asp-route-id="@student.STUDENT_ID">Edit</a>
+
+                                <form method="post" asp-controller="Student" asp-action="Delete">
+                                    <input type="hidden" value="@student.STUDENT_ID" name="id" />
+                                    <input type="hidden" value="@student.GROUP_ID" name="groupId" />
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+    }
+    <div class="form-group text-center">
+        <a class="btn btn-secondary" href="@Url.Action("GroupsByGroupId", "Group", new { groupId = groupId })">Back to Group</a>
+        @*<a class="btn btn-secondary" href="#" onclick="history.back(); return false;">Back to Group</a>*@
+    </div>
+</div>

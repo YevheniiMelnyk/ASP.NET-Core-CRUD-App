@@ -1,0 +1,30 @@
+﻿@model Student
+@{
+    ViewData["Title"] = "Edit student";
+}
+
+<div class="container">
+    <h2>Student editing</h2>
+    <form asp-action="UpdateStudent" method="post">
+        @Html.HiddenFor(model => model.STUDENT_ID)
+        <input type="hidden" asp-for="STUDENT_ID" value="@Model.STUDENT_ID" />
+
+        <div class="form-group">
+            <label asp-for="FIRST_NAME" class="control-label"></label>
+            <input asp-for="FIRST_NAME" class="form-control" value="@Model.FIRST_NAME"/>
+            <span asp-validation-for="FIRST_NAME" class="text-danger"></span>
+        </div>
+
+        <div class="form-group" style="padding-top:10px;">
+            <label asp-for="LAST_NAME" class="control-label"></label>
+            <input asp-for="LAST_NAME" class="form-control" value="@Model.LAST_NAME"/>
+            <span asp-validation-for="LAST_NAME" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a class="btn btn-secondary" asp-action="Students" asp-route-groupId="@Model.GROUP_ID">Cancel</a>
+            <input type="hidden" asp-for="GROUP_ID" value="@Model.GROUP_ID" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,69 @@
+﻿@using WebApplication1.Models
+@model IEnumerable<Group>
+
+@{
+    ViewData["Title"] = "Group";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+         <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+@{
+    int courseIdFromStudents = ViewBag.CourseIdFromStudents ?? 0;
+    int courseId = courseIdFromStudents == 0 ? ViewBag.CourseId : courseIdFromStudents;
+}
+
+<div class="container">
+    <div class="text-center">
+        <a class="btn btn-primary" asp-controller="Group" asp-action="CreateGroup" asp-route-courseId="@courseId">Create group</a>
+    </div>
+
+    <input type="hidden" value="@courseId" name="courseId" />
+
+    @if (!Model.Any())
+    {
+        <h4>The course does not contain any of Group</h4>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Group name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model)
+                    {
+                        <tr>
+                            <td class="link-to">
+                                <a href="@Url.Action("Students", "Student", new { groupId = group.GROUP_ID })">@group.NAME</a>
+                            </td>
+                            <td class="td-btn">
+                                <a class="btn btn-primary" asp-action="UpdateGroup" asp-route-id="@group.GROUP_ID">Edit</a>
+
+                                <form method="post" asp-controller="Group" asp-action="Delete">
+                                    <input type="hidden" value="@group.GROUP_ID" name="Id" />
+                                    <input type="hidden" value="@group.COURSE_ID" name="courseId" />
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    <div class="text-center">
+        <a href="/" class="btn btn-secondary">Back to Course</a>
+    </div>
+</div>
